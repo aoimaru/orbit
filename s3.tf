@@ -20,7 +20,7 @@ resource "aws_s3_bucket" "bucket" {
 # S3バケットポリシー（オプション：制限付きアクセスにしたい場合）
 resource "aws_s3_bucket_policy" "restrict_public_access" {
   # どのバケットに付与するか
-  bucket = aws_s3_bucket.app_scripts.id
+  bucket = aws_s3_bucket.bucket.id
 
   policy = jsonencode({
     Version = "2012-10-17",
@@ -30,7 +30,7 @@ resource "aws_s3_bucket_policy" "restrict_public_access" {
         Effect    = "Deny",
         Principal = "*",
         Action    = "s3:GetObject",
-        Resource  = "${aws_s3_bucket.app_scripts.arn}/*",
+        Resource  = "${aws_s3_bucket.bucket.arn}/*",
         Condition = {
           Bool = {
             "aws:SecureTransport" = "false"
@@ -42,8 +42,8 @@ resource "aws_s3_bucket_policy" "restrict_public_access" {
 }
 
 # パブリックアクセスのブロック
-resource "aws_s3_bucket_public_access_block" "app_scripts_cidr_block" {
-  bucket = aws_s3_bucket.app_scripts.id
+resource "aws_s3_bucket_public_access_block" "bucket_cidr_block" {
+  bucket = aws_s3_bucket.bucket.id
 
   block_public_acls       = true
   block_public_policy     = true
