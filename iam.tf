@@ -62,7 +62,7 @@ resource "aws_iam_role_policy_attachment" "app_ssm_core_policy" {
 data "aws_iam_policy_document" "s3_readonly_policy_doc" {
   statement {
     actions   = ["s3:GetObject"]
-    resources = ["${aws_s3_bucket.app_scripts.arn}/*"]
+    resources = ["${aws_s3_bucket.bucket.arn}/*"]
     effect    = "Allow"
   }
 }
