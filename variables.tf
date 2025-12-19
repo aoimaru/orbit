@@ -17,12 +17,3 @@ variable "ver" {
     type = string
 }
 
-variable "cidr_block" {
-  description = "VPCのCIDRブロック"
-  type        = string
-  default     = "10.0.0.0/16"
-  validation {
-    condition     = can(cidrhost(var.vpc_cidr, 0))
-    error_message = "有効なCIDRブロックを指定してください。"
-  }
-}
